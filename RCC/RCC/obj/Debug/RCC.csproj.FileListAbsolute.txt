@@ -1,0 +1,9 @@
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\bin\Debug\RCC.exe.config
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\bin\Debug\RCC.exe
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\bin\Debug\RCC.pdb
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\obj\Debug\RCC.csprojResolveAssemblyReference.cache
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\obj\Debug\RCC.Form1.resources
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\obj\Debug\RCC.Properties.Resources.resources
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\obj\Debug\RCC.csproj.GenerateResource.Cache
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\obj\Debug\RCC.exe
+c:\users\_\documents\visual studio 2013\Projects\RCC\RCC\obj\Debug\RCC.pdb

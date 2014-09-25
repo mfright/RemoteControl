@@ -1,0 +1,8 @@
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\bin\Release\RCC.exe.config
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\bin\Release\RCC.exe
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\bin\Release\RCC.pdb
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\obj\Release\RCC.Form1.resources
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\obj\Release\RCC.Properties.Resources.resources
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\obj\Release\RCC.csproj.GenerateResource.Cache
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\obj\Release\RCC.exe
+C:\Users\_\Documents\Visual Studio 2013\Projects\RCC\RCC\obj\Release\RCC.pdb
