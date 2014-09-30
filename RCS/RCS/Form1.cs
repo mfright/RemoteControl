@@ -61,7 +61,24 @@ namespace RCS
         /// <param name="e"></param>
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            if (txtLogs.Text.Length > 1000)
+            {
+                int begin = 1000;
+                int leng = txtLogs.Text.Length - begin;
+                if (txtLogs.Text.IndexOf(Environment.NewLine) != -1)
+                {
+                    txtLogs.Text = txtLogs.Text.Substring(begin, leng);
+                }
+            }
+
             txtLogs.Text += message + "\r\n";
+
+            //カレット位置を末尾に移動
+            txtLogs.SelectionStart = txtLogs.Text.Length;
+            //テキストボックスにフォーカスを移動
+            txtLogs.Focus();
+            //カレット位置までスクロール
+            txtLogs.ScrollToCaret();
         }
 
 
@@ -105,9 +122,7 @@ namespace RCS
                 printLog("接続を受けました。IP:" + ((System.Net.IPEndPoint)client.Client.LocalEndPoint).Address
                     + " PORT:" + ((System.Net.IPEndPoint)client.Client.LocalEndPoint).Port);
 
-
-
-
+                
                 //NetworkStreamを取得
                 System.Net.Sockets.NetworkStream ns = client.GetStream();
 
@@ -208,42 +223,51 @@ namespace RCS
         /// <returns></returns>
         private ArrayList loadIni()
         {
-            ArrayList commandList = new ArrayList();
-
-            // StreamReader の新しいインスタンスを生成する
-            System.IO.StreamReader cReader = (
-                new System.IO.StreamReader(@"commands.ini", System.Text.Encoding.Default)
-            );
-
-            // 読み込んだ結果をすべて格納するための変数を宣言する
-            //string stResult = string.Empty;
-
-            // 読み込みできる文字がなくなるまで繰り返す
-            while (cReader.Peek() >= 0)
+            try
             {
-                // ファイルを 1 行ずつ読み込む
-                string stBuffer = cReader.ReadLine();
-                // 読み込んだものを追加で格納する
-                //stResult += stBuffer + System.Environment.NewLine;
+                ArrayList commandList = new ArrayList();
 
-                if (stBuffer.Length > 2 && stBuffer.Substring(0, 2) != "//")
+                // StreamReader の新しいインスタンスを生成する
+                System.IO.StreamReader cReader = (
+                    new System.IO.StreamReader(@"commands.ini", System.Text.Encoding.Default)
+                );
+
+                // 読み込んだ結果をすべて格納するための変数を宣言する
+                //string stResult = string.Empty;
+
+                // 読み込みできる文字がなくなるまで繰り返す
+                while (cReader.Peek() >= 0)
                 {
+                    // ファイルを 1 行ずつ読み込む
+                    string stBuffer = cReader.ReadLine();
+                    // 読み込んだものを追加で格納する
+                    //stResult += stBuffer + System.Environment.NewLine;
+
+                    if (stBuffer.Length > 2 && stBuffer.Substring(0, 2) != "//")
+                    {
 
 
-                    
 
-                    anCommand ancom = new anCommand();
-                    ancom.commandString = stBuffer;
 
-                    commandList.Add(ancom);
-                    
+                        anCommand ancom = new anCommand();
+                        ancom.commandString = stBuffer;
+
+                        commandList.Add(ancom);
+
+                    }
                 }
+
+                // cReader を閉じる (正しくは オブジェクトの破棄を保証する を参照)
+                cReader.Close();
+
+                return commandList;
             }
-
-            // cReader を閉じる (正しくは オブジェクトの破棄を保証する を参照)
-            cReader.Close();
-
-            return commandList;
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Application.Exit();
+                return null;
+            }
         }
     }
 }

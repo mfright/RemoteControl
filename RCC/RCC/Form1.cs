@@ -135,54 +135,64 @@ namespace RCC
         {
             ArrayList commandList = new ArrayList();
 
-            // StreamReader の新しいインスタンスを生成する
-            System.IO.StreamReader cReader = (
-                new System.IO.StreamReader(@"settings.ini", System.Text.Encoding.Default)
-            );
-
-            // 読み込んだ結果をすべて格納するための変数を宣言する
-            //string stResult = string.Empty;
-
-            // 読み込みできる文字がなくなるまで繰り返す
-            while (cReader.Peek() >= 0)
+            try
             {
-                // ファイルを 1 行ずつ読み込む
-                string stBuffer = cReader.ReadLine();
-                // 読み込んだものを追加で格納する
-                //stResult += stBuffer + System.Environment.NewLine;
+                // StreamReader の新しいインスタンスを生成する
+                System.IO.StreamReader cReader = (
+                    new System.IO.StreamReader(@"settings.ini", System.Text.Encoding.Default)
+                );
 
-                if (stBuffer.Length > 2 && stBuffer.Substring(0, 2) != "//")
+                // 読み込んだ結果をすべて格納するための変数を宣言する
+                //string stResult = string.Empty;
+
+                // 読み込みできる文字がなくなるまで繰り返す
+                while (cReader.Peek() >= 0)
                 {
+                    // ファイルを 1 行ずつ読み込む
+                    string stBuffer = cReader.ReadLine();
+                    // 読み込んだものを追加で格納する
+                    //stResult += stBuffer + System.Environment.NewLine;
 
-
-                    string[] stArrayData = stBuffer.Split(',');
-
-                    if (stArrayData.Length > 2)
+                    if (stBuffer.Length > 2 && stBuffer.Substring(0, 2) != "//")
                     {
 
-                        //targetIPs.Add(stArrayData[0]);
-                        //commandNumbers.Add(stArrayData[1]);
 
-                        anCommand ancom = new anCommand();
-                        ancom.targetIP = stArrayData[0];
-                        ancom.portNum = stArrayData[1];
-                        ancom.commandNumber = stArrayData[2];
+                        string[] stArrayData = stBuffer.Split(',');
 
-                        //MessageBox.Show(stArrayData[0] + "/" + stArrayData[1] + "/" + stArrayData[2]);
+                        if (stArrayData.Length > 2)
+                        {
 
-                        commandList.Add(ancom);
-                    }
-                    else
-                    {
-                        MessageBox.Show("settings.iniの書式が変です.");
+                            //targetIPs.Add(stArrayData[0]);
+                            //commandNumbers.Add(stArrayData[1]);
+
+                            anCommand ancom = new anCommand();
+                            ancom.targetIP = stArrayData[0];
+                            ancom.portNum = stArrayData[1];
+                            ancom.commandNumber = stArrayData[2];
+
+                            //MessageBox.Show(stArrayData[0] + "/" + stArrayData[1] + "/" + stArrayData[2]);
+
+                            commandList.Add(ancom);
+                        }
+                        else
+                        {
+                            MessageBox.Show("settings.iniの書式が変です.");
+                        }
                     }
                 }
+
+                // cReader を閉じる (正しくは オブジェクトの破棄を保証する を参照)
+                cReader.Close();
+
+                return commandList;
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("settings.iniを読み込めません");
+                Application.Exit();
 
-            // cReader を閉じる (正しくは オブジェクトの破棄を保証する を参照)
-            cReader.Close();
-
-            return commandList;
+                return null;
+            }
         }
 
 
