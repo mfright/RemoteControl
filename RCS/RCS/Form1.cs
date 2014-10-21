@@ -201,7 +201,35 @@ namespace RCS
             {
                 try
                 {
-                    System.Diagnostics.Process p = System.Diagnostics.Process.Start(((anCommand)commandsArray[line - 1]).commandString);
+                    
+                    string cmdstr = ((anCommand)commandsArray[line - 1]).commandString;
+
+                    //Processオブジェクトを作成
+                    System.Diagnostics.Process p = new System.Diagnostics.Process();
+
+                    //出力をストリームに書き込むようにする
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    //OutputDataReceivedイベントハンドラを追加
+                    p.OutputDataReceived += p_OutputDataReceived;
+
+                    p.StartInfo.FileName =
+                        System.Environment.GetEnvironmentVariable("ComSpec");
+                    p.StartInfo.RedirectStandardInput = false;
+                    p.StartInfo.CreateNoWindow = true;
+                    //p.StartInfo.Arguments = @"/c dir c:\ /w";
+                    p.StartInfo.Arguments = @"/c "+cmdstr;
+
+                    //起動
+                    p.Start();
+
+                    //非同期で出力の読み取りを開始
+                    p.BeginOutputReadLine();
+
+                    p.WaitForExit();
+                    p.Close();
+
+                    Console.ReadLine();
                 }
                 catch (Exception ex)
                 {
@@ -216,6 +244,18 @@ namespace RCS
                 Console.WriteLine("数値でないコマンド行数を検知");
             }
         }
+
+        //OutputDataReceivedイベントハンドラ
+        //行が出力されるたびに呼び出される
+        static void p_OutputDataReceived(object sender,
+            System.Diagnostics.DataReceivedEventArgs e)
+        {
+            //出力された文字列を表示する
+            Console.WriteLine(e.Data);
+        }
+
+
+
 
         /// <summary>
         /// iniをロードする
