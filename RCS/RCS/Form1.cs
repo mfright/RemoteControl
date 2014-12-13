@@ -186,7 +186,9 @@ namespace RCS
         /// <param name="stLog"></param>
         private void printLog(string stLog)
         {
-            message = stLog;
+            DateTime dtNow = DateTime.Now;
+
+            message = dtNow.ToString() + " - " + stLog;
             bgWorker.ReportProgress(0);
         }
 
@@ -307,6 +309,14 @@ namespace RCS
                 MessageBox.Show(e.Message);
                 Application.Exit();
                 return null;
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("終了すると遠隔操作を受け付けなくなります。終了しますか？", "確認", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                e.Cancel = true;
             }
         }
     }
